@@ -1,0 +1,390 @@
+{
+  "Routes": [
+    //For User API(general user functions)
+    {
+      //to get user by id
+      "UseServiceDiscovery": true,
+      "DownstreamPathTemplate": "/api/user/{id}",
+      "DownstreamScheme": "http",
+      // "DownstreamScheme": "https",
+      "ServiceName": "UserAPI",
+      "LoadBalancerOptions": {
+        "Type": "LeastConnection"
+      },
+      "UpstreamPathTemplate": "/api/user/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      //to get user by email
+      "UseServiceDiscovery": true,
+      "DownstreamPathTemplate": "/api/user/byemail",
+      "DownstreamScheme": "http",
+      // "DownstreamScheme": "https",
+      "ServiceName": "UserAPI",
+      "LoadBalancerOptions": {
+        "Type": "LeastConnection"
+      },
+      "UpstreamPathTemplate": "/api/user/byemail",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      //for user registration
+      "UseServiceDiscovery": true,
+      "DownstreamPathTemplate": "/api/user/register",
+      "DownstreamScheme": "http",
+      // "DownstreamScheme": "https",
+      "ServiceName": "UserAPI",
+      "LoadBalancerOptions": {
+        "Type": "LeastConnection"
+      },
+      "UpstreamPathTemplate": "/api/user/register",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      //for user login
+      "UseServiceDiscovery": true,
+      "DownstreamPathTemplate": "/api/user/login",
+      "DownstreamScheme": "http",
+      // "DownstreamScheme": "https",
+      "ServiceName": "UserAPI",
+      "LoadBalancerOptions": {
+        "Type": "LeastConnection"
+      },
+      "UpstreamPathTemplate": "/api/user/login",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      //for authentication of jwt token
+      "UseServiceDiscovery": true,
+      "DownstreamPathTemplate": "/api/user/authenticate",
+      "DownstreamScheme": "http",
+      // "DownstreamScheme": "https",
+      "ServiceName": "UserAPI",
+      "LoadBalancerOptions": {
+        "Type": "LeastConnection"
+      },
+      "UpstreamPathTemplate": "/api/user/authenticate",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      //for user to verify account
+      "UseServiceDiscovery": true,
+      "DownstreamPathTemplate": "/api/user/verify",
+      "DownstreamScheme": "http",
+      // "DownstreamScheme": "https",
+      "ServiceName": "UserAPI",
+      "LoadBalancerOptions": {
+        "Type": "LeastConnection"
+      },
+      "UpstreamPathTemplate": "/api/user/verify",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      //for user who forgot password
+      "UseServiceDiscovery": true,
+      "DownstreamPathTemplate": "/api/user/forgot-password",
+      "DownstreamScheme": "http",
+      // "DownstreamScheme": "https",
+      "ServiceName": "UserAPI",
+      "LoadBalancerOptions": {
+        "Type": "LeastConnection"
+      },
+      "UpstreamPathTemplate": "/api/user/forgot-password",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      //to get user by id
+      "UseServiceDiscovery": true,
+      "DownstreamPathTemplate": "/api/user/profile/{id}",
+      "DownstreamScheme": "http",
+      // "DownstreamScheme": "https",
+      "ServiceName": "UserAPI",
+      "LoadBalancerOptions": {
+        "Type": "LeastConnection"
+      },
+      "UpstreamPathTemplate": "/api/user/profile/{id}",
+      "UpstreamHttpMethod": [
+        "put"
+      ]
+    },
+    {
+      //for user to change password
+      "UseServiceDiscovery": true,
+      "DownstreamPathTemplate": "/api/user/changepassword",
+      "DownstreamScheme": "http",
+      // "DownstreamScheme": "https",
+      "ServiceName": "UserAPI",
+      "LoadBalancerOptions": {
+        "Type": "LeastConnection"
+      },
+      "UpstreamPathTemplate": "/api/user/changepassword",
+      "UpstreamHttpMethod": [
+        "put"
+      ]
+    },
+    {
+      //for user to reset password
+      "UseServiceDiscovery": true,
+      "DownstreamPathTemplate": "/api/user/reset-password",
+      "DownstreamScheme": "http",
+      // "DownstreamScheme": "https",
+      "ServiceName": "UserAPI",
+      "LoadBalancerOptions": {
+        "Type": "LeastConnection"
+      },
+      "UpstreamPathTemplate": "/api/user/reset-password",
+      "UpstreamHttpMethod": [
+        "put"
+      ]
+    },
+    //For User API (admin functions)
+    {
+      //to get all users
+      "UseServiceDiscovery": true,
+      "DownstreamPathTemplate": "/api/admin/allusers",
+      "DownstreamScheme": "http",
+      // "DownstreamScheme": "https",
+      "ServiceName": "UserAPI",
+      "LoadBalancerOptions": {
+        "Type": "LeastConnection"
+      },
+      "UpstreamPathTemplate": "/api/admin/allusers",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      //to get user by id
+      "UseServiceDiscovery": true,
+      "DownstreamPathTemplate": "/api/admin/{id}",
+      "DownstreamScheme": "http",
+      // "DownstreamScheme": "https",
+      "ServiceName": "UserAPI",
+      "LoadBalancerOptions": {
+        "Type": "LeastConnection"
+      },
+      "UpstreamPathTemplate": "/api/admin/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      //to change user status based on id
+      "UseServiceDiscovery": true,
+      "DownstreamPathTemplate": "/api/admin/userstatus/{id}",
+      "DownstreamScheme": "http",
+      // "DownstreamScheme": "https",
+      "ServiceName": "UserAPI",
+      "LoadBalancerOptions": {
+        "Type": "LeastConnection"
+      },
+      "UpstreamPathTemplate": "/api/admin/userstatus/{id}",
+      "UpstreamHttpMethod": [
+        "PUT"
+      ]
+    },
+    //For User API (upload image)
+    {
+      "UseServiceDiscovery": true,
+      "DownstreamPathTemplate": "/api/upload",
+      "DownstreamScheme": "http",
+      // "DownstreamScheme": "https",
+      "ServiceName": "UserAPI",
+      "LoadBalancerOptions": {
+        "Type": "LeastConnection"
+      },
+      "UpstreamPathTemplate": "/api/upload",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    //For Fav API
+    {
+      //to get all favs by user
+      "UseServiceDiscovery": true,
+      "DownstreamPathTemplate": "/api/fav/{user}",
+      "DownstreamScheme": "http",
+      // "DownstreamScheme": "https",
+      "ServiceName": "FavAPI",
+      "LoadBalancerOptions": {
+        "Type": "LeastConnection"
+      },
+      "UpstreamPathTemplate": "/api/fav/{user}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      //to get all fav
+      "UseServiceDiscovery": true,
+      "DownstreamPathTemplate": "/api/fav/all",
+      "DownstreamScheme": "http",
+      // "DownstreamScheme": "https",
+      "ServiceName": "FavAPI",
+      "LoadBalancerOptions": {
+        "Type": "LeastConnection"
+      },
+      "UpstreamPathTemplate": "/api/fav/all",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      //to add to fav
+      "UseServiceDiscovery": true,
+      "DownstreamPathTemplate": "/api/fav/addtofav",
+      "DownstreamScheme": "http",
+      // "DownstreamScheme": "https",
+      "ServiceName": "FavAPI",
+      "LoadBalancerOptions": {
+        "Type": "LeastConnection"
+      },
+      "UpstreamPathTemplate": "/api/fav/addtofav",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      //to remove fav by id (toggling active status)
+      "UseServiceDiscovery": true,
+      "DownstreamPathTemplate": "/api/fav/removefav/{id}",
+      "DownstreamScheme": "http",
+      // "DownstreamScheme": "https",
+      "ServiceName": "FavAPI",
+      "LoadBalancerOptions": {
+        "Type": "LeastConnection"
+      },
+      "UpstreamPathTemplate": "/api/fav/removefav/{id}",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      //to send email upon successful verification
+      "UseServiceDiscovery": true,
+      "DownstreamPathTemplate": "/api/email/verify",
+      "DownstreamScheme": "http",
+      // "DownstreamScheme": "https",
+      "ServiceName": "EmailAPI",
+      "LoadBalancerOptions": {
+        "Type": "LeastConnection"
+      },
+      "UpstreamPathTemplate": "/api/email/verify",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      //to send email upon successful registration
+      "UseServiceDiscovery": true,
+      "DownstreamPathTemplate": "/api/email/register",
+      "DownstreamScheme": "http",
+      // "DownstreamScheme": "https",
+      "ServiceName": "EmailAPI",
+      "LoadBalancerOptions": {
+        "Type": "LeastConnection"
+      },
+      "UpstreamPathTemplate": "/api/email/register",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      //to send email about forgot password
+      "UseServiceDiscovery": true,
+      "DownstreamPathTemplate": "/api/email/forgot-password",
+      "DownstreamScheme": "http",
+      // "DownstreamScheme": "https",
+      "ServiceName": "EmailAPI",
+      "LoadBalancerOptions": {
+        "Type": "LeastConnection"
+      },
+      "UpstreamPathTemplate": "/api/email/forgot-password",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      //to send email about reset password
+      "UseServiceDiscovery": true,
+      "DownstreamPathTemplate": "/api/email/reset-password",
+      "DownstreamScheme": "http",
+      // "DownstreamScheme": "https",
+      "ServiceName": "EmailAPI",
+      "LoadBalancerOptions": {
+        "Type": "LeastConnection"
+      },
+      "UpstreamPathTemplate": "/api/email/reset-password",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      //to send email about user blocked status
+      "UseServiceDiscovery": true,
+      "DownstreamPathTemplate": "/api/email/blocked-email",
+      "DownstreamScheme": "http",
+      // "DownstreamScheme": "https",
+      "ServiceName": "EmailAPI",
+      "LoadBalancerOptions": {
+        "Type": "LeastConnection"
+      },
+      "UpstreamPathTemplate": "/api/email/blocked-email",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      //to send email about user unblocked status
+      "UseServiceDiscovery": true,
+      "DownstreamPathTemplate": "/api/email/unblock-email",
+      "DownstreamScheme": "http",
+      // "DownstreamScheme": "https",
+      "ServiceName": "EmailAPI",
+      "LoadBalancerOptions": {
+        "Type": "LeastConnection"
+      },
+      "UpstreamPathTemplate": "/api/email/unblock-email",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      //to send email about password change
+      "UseServiceDiscovery": true,
+      "DownstreamPathTemplate": "/api/email/change-password",
+      "DownstreamScheme": "http",
+      // "DownstreamScheme": "https",
+      "ServiceName": "EmailAPI",
+      "LoadBalancerOptions": {
+        "Type": "LeastConnection"
+      },
+      "UpstreamPathTemplate": "/api/email/change-password",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    }
+  ],
+  //for use in docker
+  "GlobalConfiguration": {
+    "ServiceDiscoveryProvider": {
+      "Host": "consul",
+      "Port": 8500,
+      "Type": "Consul"
+    }
+  }
+}

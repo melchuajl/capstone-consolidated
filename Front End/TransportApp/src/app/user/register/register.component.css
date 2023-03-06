@@ -1,0 +1,45 @@
+.register-bg-image {
+  background-image: url("../../assets/images/register-page.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.error-text {
+  margin-top: -10px;
+  margin-bottom: 10px;
+  font-size: smaller;
+}
+
+.spinner {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  opacity: 20%;
+  background-color: black;
+}
+
+.spinner-image {
+  width: 100%;
+  height: 80%;
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  z-index: 100;
+  background-image: url(../../../assets/images/bee-spinner.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  animation: bouncing 0.4s cubic-bezier(0.1, 0.25, 0.1, 1) 0s infinite alternate both;
+}
+
+@keyframes bouncing {
+  0% {
+    top: 10%;
+  }
+
+  100% {
+    top: 1%;
+  }
+}

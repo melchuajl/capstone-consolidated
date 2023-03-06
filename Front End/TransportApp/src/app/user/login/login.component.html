@@ -1,0 +1,66 @@
+<div class="container">
+  <section class="h-100">
+    <div class="container p-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col col-lg-10 col-xl-8">
+          <div>
+            <div class="card-body p-4 text-black">
+              <div class="col-lg-12" style="text-align: center;">
+                <div class="row">
+                  <div class="col-md-6" style="z-index: -1;">
+                    <img src="/assets/images/login-hive.png" width="100%" alt="login page">
+                  </div>
+                  <div class="col-md-6 col-sm-10 text-center">
+                    <h2 style="z-index: 1;"><b>Welcome back!</b></h2>
+                    <p style="color: lightslategray; text-align: center; z-index: 1;">
+                      Please enter your login details
+                    </p>
+                    <!-- declaration of form group and the onSubmit() event handler will be triggered the moment the user clicked on the Login button -->
+                    <form [formGroup]="loginForm" (ngSubmit)="loginSubmit()">
+                      <div class="row">
+                        <div class="mb-3">
+                          <input type="email" class="form-control" id="email" formControlName="email"
+                            placeholder="Email">
+                        </div>
+                        <!-- if the respective input doesn't meet the validator requirement(s) -->
+                        <div class="text-danger error-text" *ngIf="email?.dirty && email?.invalid">
+                          Please check your email
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="mb-3">
+                          <input type="password" class="form-control" id="password" formControlName="password"
+                            placeholder="Password">
+                        </div>
+                        <!-- if the respective input doesn't meet the validator requirement(s) -->
+                        <div class="text-danger error-text" *ngIf="password?.dirty && password?.invalid">
+                          Please check your password
+                        </div>
+                      </div>
+
+                      <!-- Login button -->
+                      <div class="row">
+                        <div class="text-center mt-3">
+                          <button class="btn btn-dark col-sm-8 col-md-6" style="z-index: 1;">Login</button>
+                        </div>
+                      </div>
+                    </form>
+
+                  </div>
+                </div>
+              </div>
+              <div class="forgot-register-links mt-3">
+                <small><a routerLink="../forgot-password">Forgot password</a></small><br>
+                <small><a routerLink="../register">Register new account</a></small>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div *ngIf="isLoading" class="spinner"></div>
+<div *ngIf="isLoading" class="spinner-image"></div>

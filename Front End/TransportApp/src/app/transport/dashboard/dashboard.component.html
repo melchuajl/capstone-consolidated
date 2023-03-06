@@ -1,0 +1,501 @@
+<div class="container-fluid">
+  <div class="row justify-content-center">
+
+    <!-- Left Column starts -->
+
+    <div class="col-md-8 col-sm-12 my-2">
+      <!-- Search Input from User -->
+
+      <div class="accordion" id="preferenceAccordian">
+
+        <div class="accordion-item mt-2 p-2">
+          <h4 class="accordion-header" id="preferenceHeading">
+            <div class="row align-items-center mb-2">
+              <div class="col-md-5 col-sm-12">
+                <input class="form-control mt-2" type="text" id="originInput" [(ngModel)]="origin" placeholder="From">
+              </div>
+              <div class="col-1 text-center"><i class="fa-solid fa-right-left" (click)="swapLocations()"
+                  style="cursor:pointer"></i></div>
+              <div class="col-md-5 col-sm-12">
+                <input class="form-control mt-2" type="text" id="destinationInput" [(ngModel)]="destination"
+                  placeholder="To">
+              </div>
+              <div class="col-1">
+                <button class="btn" type="button" data-bs-toggle="collapse" data-bs-target="#collapsePreferences"
+                  aria-expanded="true" aria-controls="collapsePreferences">
+                  <i class="fa-solid fa-angle-down"></i>
+                </button>
+              </div>
+            </div>
+          </h4>
+          <div id="collapsePreferences" class="accordion-collapse collapse bg-warning"
+            aria-labelledby="preferenceHeading" data-bs-parent="#preferenceAccordian">
+            <div class="accordion-body" style="border: none;">
+              <!-- Optional preference for user to select to plan their route -->
+              <div class="row justify-content-center">
+
+                <div class="col-md-4 col-sm-8 mb-3">
+                  <label for="desiredArrivalTime">I would like to arrive by:</label>
+                  <input class="form-control mt-2" type="text" id="desiredArrivalTime" [(ngModel)]="desiredArrivalTime"
+                    onfocus="(this.type='datetime-local')" placeholder="(optional)">
+                </div>
+
+                <div class="col-md-4 col-sm-8 mb-3">
+                  <label for="routePreference">Public Transport preferences
+                  </label>
+                  <select class="form-select mt-2" [(ngModel)]="chosen_routePreference"
+                    aria-label=".form-select-sm example" id="routePreference">
+                    <option [value]="0" disabled selected>(optional)</option>
+                    <option value="0">Best Route</option>
+                    <option value="1">Less Walking</option>
+                    <option value="2">Fewer Transfers</option>
+                  </select>
+                </div>
+
+                <div class="col-md-4 col-sm-8 mb-3">
+                  <label for="routeAvoidance">Driving preference</label>
+                  <select class="form-select mt-2" [(ngModel)]="chosen_routeAvoidance"
+                    aria-label=".form-select-sm example" id="routeAvoidance">
+                    <option [value]="0" disabled selected>(optional)
+                    </option>
+                    <option value="0">None</option>
+                    <option value="1">Avoid Highways</option>
+                    <option value="2">Avoid Toll Roads</option>
+                  </select>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row justify-content-center">
+        <div class="col-md-4 col-sm-8 d-flex align-items-center">
+
+          <button [disabled]="isSearchDisabled" class="btn btn-warning mt-2 w-100"
+            (click)="getRoutes(); renderRoute(bus); showRoute(0, busDirectionsResults); newSearch(true)">
+            <span class="material-symbols-outlined">
+              emoji_nature
+            </span>
+            Search</button>
+
+        </div>
+      </div>
+
+
+      <!-- Google Map is rendered inside this div -->
+
+      <div class="my-2">
+
+        <google-map height="500px" width="100%" [center]="center!" [options]="options">
+
+          <!-- Render route polyline based on chosen_mode -->
+          <div *ngIf="chosen_mode == 'bus'">
+            <map-directions-renderer *ngIf="busDirectionsResults" [directions]="busDirectionsResults"
+              [options]="renderer_options">
+            </map-directions-renderer>
+          </div>
+
+          <div *ngIf="chosen_mode == 'mrt'">
+            <map-directions-renderer *ngIf="railDirectionsResults" [directions]="railDirectionsResults"
+              [options]="renderer_options">
+            </map-directions-renderer>
+            <map-transit-layer></map-transit-layer>
+          </div>
+
+          <div *ngIf="chosen_mode == 'taxi'">
+            <map-directions-renderer *ngIf="carDirectionsResults" [directions]="carDirectionsResults"
+              [options]="renderer_options">
+            </map-directions-renderer>
+            <map-traffic-layer></map-traffic-layer>
+          </div>
+
+          <div *ngIf="chosen_mode == 'fave'">
+            <map-directions-renderer *ngIf="faveDirectionsResults" [directions]="faveDirectionsResults"
+              [options]="renderer_options">
+            </map-directions-renderer>
+            <map-transit-layer></map-transit-layer>
+          </div>
+
+        </google-map>
+      </div>
+
+    </div>
+
+    <!-- Left Column ends -->
+
+    <!-- Right Column starts -->
+
+    <div class="col-md-4 col-sm-12 my-2 py-2">
+
+      <div class="container">
+
+        <div class="btn-group w-100" role="group">
+          <input type="radio" class="btn-check" name="btnradio" id="busRoutes" autocomplete="off"
+            (click)="renderRoute(bus); showRoute(0,busDirectionsResults)" [checked]="selectBus">
+          <label class="btn btn-outline-warning w-100 text-dark" for="busRoutes">
+            <i class="fa-solid fa-bus"></i>
+            Bus
+          </label>
+          <input type="radio" class="btn-check" name="btnradio" id="mrtRoutes" autocomplete="off"
+            (click)="renderRoute(mrt); showRoute(0,railDirectionsResults); newSearch(false)">
+          <label class="btn btn-outline-warning w-100 text-dark" for="mrtRoutes">
+            <i class="fa-solid fa-train-subway"></i>
+            MRT
+          </label>
+          <input type="radio" class="btn-check" name="btnradio" id="taxiRoutes" autocomplete="off"
+            (click)="renderRoute(taxi); showRoute(0,carDirectionsResults); newSearch(false)">
+          <label class="btn btn-outline-warning w-100 text-dark" for="taxiRoutes">
+            <i class="fas fa-taxi"></i>
+            Taxi
+          </label>
+          <input type="radio" class="btn-check" name="btnradio" id="faveRoutes" autocomplete="off"
+            (click)="renderRoute(fave); showRoute(0,faveDirectionsResults); renderFaves(); newSearch(false)">
+          <label class="btn btn-outline-warning w-100 text-dark" for="faveRoutes">
+            <i class="fa-solid fa-heart"></i>
+            Faves
+          </label>
+        </div>
+
+        <div class="dropdown">
+          <button class="btn btn-sm btn-secondary dropdown-toggle mt-2" type="button" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            Sort results
+          </button>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item"
+                (click)="sortByFare(busRoutes);sortByFare(railRoutes);sortByFare(carRoutes)">Cheapest fare</a></li>
+            <li><a class="dropdown-item"
+                (click)="sortByEarliestArrival(busRoutes);sortByEarliestArrival(railRoutes);sortByEarliestArrival(carRoutes);">Earliest
+                arrival time</a>
+            </li>
+            <li><a class="dropdown-item"
+                (click)="sortByTotalDuration(busRoutes);sortByTotalDuration(railRoutes);sortByTotalDuration(carRoutes);">Shortest
+                travel duration</a>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+
+
+      <!-- Start of Accordion -->
+
+      <!-- Bus routes listed here -->
+
+      <div *ngIf="chosen_mode=='bus'">
+        <div class="accordion" id="busRouteAccordion" *ngFor="let x of busRoutes; let i = index">
+
+          <!-- Accordion header starts -->
+
+          <div class="accordion-item m-3">
+            <h2 class="accordion-header" id="heading{{i}}">
+              <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                attr.data-bs-target="#collapse{{i}}" aria-expanded="false" attr.aria-controls="collapse{{i}}"
+                (click)="showRoute(x.routeIndex,busDirectionsResults)">
+
+                <div class="container-fluid">
+
+                  <div class="row">
+                    <div class="d-inline-flex align-items-center col-9">
+                      <ng-container class="p-0" *ngFor="let y of x.steps; let last = last">
+                        <ng-container *ngIf="y.travelMode == 'WALKING'">
+                          <i class="fa-solid fa-person-walking accordian-text mx-1"></i>
+                          <span id="walking-time">{{y.duration | slice:0:2}}</span>
+                        </ng-container>
+                        <ng-container *ngIf="y.travelMode == 'TRANSIT'">
+                          <img src="{{y.transitVehicleIcon}}" width="20" class="ms-1">
+                          <span class="border rounded-2 p-1 transit-line-name me-1"
+                            [ngStyle]="{'background-color':y.transitLineColor}">
+                            {{y.transitLineName}}
+                          </span>
+                        </ng-container>
+                        <ng-container *ngIf="!last">
+                          <i class="fa-solid fa-chevron-right text-secondary mx-1" style="font-size: 10px;"></i>
+                        </ng-container>
+                      </ng-container>
+                    </div>
+                    <div class="col-3 accordian-text" *ngIf="x.totalDurationText.includes('hour ')">
+                      <div class="text-end accordian-time">{{x.totalDurationText | slice:0:2 }} h {{x.totalDurationText
+                        |
+                        slice:6:9 }}</div>
+                      <div class="text-end">mins</div>
+                    </div>
+                    <div class="col-3 accordian-text" *ngIf="x.totalDurationText.includes('hours ')">
+                      <div class="text-end accordian-time">{{x.totalDurationText | slice:0:2 }} h {{x.totalDurationText
+                        |
+                        slice:7:10 }}</div>
+                      <div class="text-end">mins</div>
+                    </div>
+                    <div class="col-3 accordian-text" *ngIf="!x.totalDurationText.includes('h')">
+                      <div class="text-end accordian-time">{{x.totalDurationText | slice:0:2 }}</div>
+                      <div class="text-end">mins</div>
+                    </div>
+                  </div>
+
+                  <div class="row flex-end mt-2">
+                    <div class="col accordian-text accordian-details">
+                      {{x.departureTimeText}} - {{x.arrivalTimeText}}
+                    </div>
+                  </div>
+                  <div class="row flex-end mt-2">
+                    <div class="col accordian-text accordian-details">
+                      Estimated fare: {{x.transitFare|currency}}
+                    </div>
+                  </div>
+
+                </div>
+
+              </button>
+            </h2>
+
+            <!-- Accordion Body Starts -->
+
+            <div id="collapse{{i}}" class="accordion-collapse collapse" data-bs-parent="#busRouteAccordion">
+              <div class="accordion-body">
+                <ul *ngFor="let y of x.steps;">
+                  <li *ngIf="y.travelMode=='WALKING'"> {{y.instructions}} ({{y.distance}}m)</li>
+                  <li *ngIf="y.travelMode==='TRANSIT'">
+                    <div>
+                      {{y.instructions}} ( {{y.transitNumStops}} stops )
+                    </div>
+                    <div>
+                      <img src="{{y.transitVehicleIcon}}">
+                      <b>{{y.transitLineName}}</b> <span *ngIf="getCountDown(y.transitDepartureTimeValue) > 0;"> -
+                        Arriving in
+                        <b>{{getCountDown(y.transitDepartureTimeValue) | timepipe }}</b> </span>
+                    </div>
+                  </li>
+                </ul>
+                <div class="d-flex justify-content-center">
+                  <i class="fa-regular fa-heart text-danger" style="cursor:pointer;"
+                    (click)="addFav(x, busDirectionsResults)"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- MRT routes listed here -->
+
+      <div class="accordion" id="railRouteAccordion" *ngIf="chosen_mode=='mrt'">
+
+        <!-- Accordion Header starts -->
+
+        <div class="accordion-item m-3" *ngFor="let x of railRoutes; let i = index">
+          <h2 class="accordion-header" id="heading{{i}}">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse"
+              attr.data-bs-target="#collapse{{i}}" aria-expanded="false" attr.aria-controls="collapse{{i}}"
+              (click)="showRoute(x.routeIndex,railDirectionsResults)">
+
+              <div class="container-fluid">
+
+                <div class="row">
+                  <div class="d-inline-flex align-items-center col-9">
+                    <ng-container class="p-0" *ngFor="let y of x.steps; let last = last">
+                      <ng-container *ngIf="y.travelMode == 'WALKING'">
+                        <i class="fa-solid fa-person-walking accordian-text mx-1"></i>
+                        <span id="walking-time">{{y.duration | slice:0:2}}</span>
+                      </ng-container>
+                      <ng-container *ngIf="y.travelMode == 'TRANSIT'">
+                        <img src="{{y.transitVehicleIcon}}" class="ms-1">
+                        <span class="border rounded-2 p-1 transit-line-name me-1"
+                          [ngStyle]="{'background-color':y.transitLineColor}">
+                          {{y.transitLineName}}
+                        </span>
+                      </ng-container>
+                      <ng-container *ngIf="!last">
+                        <i class="fa-solid fa-chevron-right text-secondary mx-1" style="font-size: 10px;"></i>
+                      </ng-container>
+                    </ng-container>
+                  </div>
+                  <div class="col-3 accordian-text" *ngIf="x.totalDurationText.includes('hour ')">
+                    <div class="text-end accordian-time">{{x.totalDurationText | slice:0:2 }} h {{x.totalDurationText |
+                      slice:6:9 }}</div>
+                    <div class="text-end">mins</div>
+                  </div>
+                  <div class="col-3 accordian-text" *ngIf="x.totalDurationText.includes('hours ')">
+                    <div class="text-end accordian-time">{{x.totalDurationText | slice:0:2 }} h {{x.totalDurationText |
+                      slice:7:10 }}</div>
+                    <div class="text-end">mins</div>
+                  </div>
+                  <div class="col-3 accordian-text" *ngIf="!x.totalDurationText.includes('h')">
+                    <div class="text-end accordian-time">{{x.totalDurationText | slice:0:2 }}</div>
+                    <div class="text-end">mins</div>
+                  </div>
+                </div>
+
+                <div class="row flex-end mt-2">
+                  <div class="col accordian-text accordian-details">
+                    {{x.departureTimeText}} - {{x.arrivalTimeText}}
+                  </div>
+                </div>
+                <div class="row flex-end mt-2">
+                  <div class="col accordian-text accordian-details">
+                    Estimated fare: {{x.transitFare|currency}}
+                  </div>
+                </div>
+
+              </div>
+
+            </button>
+          </h2>
+
+          <!-- Accordion Body Starts -->
+
+          <div id="collapse{{i}}" class="accordion-collapse collapse" data-bs-parent="#railRouteAccordion">
+            <div class="accordion-body">
+              <ul *ngFor="let y of x.steps;">
+                <li *ngIf="y.travelMode=='WALKING'"> {{y.instructions}} ({{y.distance}}m)</li>
+                <li *ngIf="y.travelMode==='TRANSIT'">
+                  <div>
+                    {{y.instructions}} ( {{y.transitNumStops}} stops )
+                  </div>
+                  <div>
+                    <img src="{{y.transitVehicleIcon}}">
+                    <b>{{y.transitLineName}}</b> <span *ngIf="getCountDown(y.transitDepartureTimeValue) > 0;"> -
+                      Arriving in
+                      <b>{{getCountDown(y.transitDepartureTimeValue)| timepipe}}</b></span>
+                  </div>
+                </li>
+              </ul>
+              <div class="d-flex justify-content-center">
+                <i class="fa-regular fa-heart text-danger" style="cursor:pointer;"
+                  (click)="addFav(x, railDirectionsResults)"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Taxi Route Listed Here -->
+
+      <div class="accordion" id="carRouteAccordion" *ngIf="chosen_mode=='taxi'">
+
+        <!-- Accordion Header starts -->
+
+        <div class="accordion-item m-3" *ngFor="let x of carRoutes; let i = index">
+          <h2 class="accordion-header" id="heading{{i}}">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse"
+              attr.data-bs-target="#collapse{{i}}" aria-expanded="false" attr.aria-controls="collapse{{i}}"
+              (click)="showRoute(x.routeIndex,carDirectionsResults)">
+              <div class="container-fluid">
+
+                <div class="row flex-end">
+                  <div class="col-6 p-0 accordian-text">
+                    via <strong>{{x.summary}}</strong>
+                  </div>
+                  <div class="col-6 p-0">
+                    <div class="text-center accordian-text">
+                      SGD{{x.taxiFare.min | number: '1.0-0' }}-{{x.taxiFare.max | number: '1.0-0' }}
+                    </div>
+                  </div>
+                </div>
+                <div class="row flex-end mt-2">
+                  <div class="accordian-text accordian-details p-0">
+                    {{(x.totalDistanceValue/1000)|number: '1.2-2'}}km
+                  </div>
+                </div>
+              </div>
+            </button>
+          </h2>
+
+          <!-- Accordion Body starts -->
+
+          <div id="collapse{{i}}" class="accordion-collapse collapse" data-bs-parent="#carRouteAccordion">
+            <div class="accordion-body">
+              <div class="row">
+                <div>
+                  <button class="btn btn-primary float-end">Book a Taxi</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Fave routes listed here -->
+
+      <div class="accordion" id="faveRouteAccordion" *ngIf="chosen_mode=='fave' && isLoggedIn">
+
+        <!-- Accordion header starts -->
+
+        <div class="accordion-item m-3" *ngFor="let x of faveRoutes; let i = index">
+          <h2 class="accordion-header" id="heading{{i}}">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse"
+              attr.data-bs-target="#collapse{{i}}" aria-expanded="false" attr.aria-controls="collapse{{i}}"
+              (click)="showRoute(i,faveDirectionsResults)">
+
+              <div class="container-fluid">
+
+                <div class="row flex-end my-2">
+                  <div class="col accordian-text accordian-details">
+                    <b>From:</b> {{x.startAddress}}<br>
+                    <b>To:</b> {{x.endAddress}}
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="d-inline-flex align-items-center col-9">
+                    <ng-container class="p-0" *ngFor="let y of x.steps; let last = last">
+                      <ng-container *ngIf="y.travelMode == 'WALKING'">
+                        <i class="fa-solid fa-person-walking accordian-text mx-1"></i>
+                        <span id="walking-time">{{y.duration | slice:0:2}}</span>
+                      </ng-container>
+                      <ng-container *ngIf="y.travelMode == 'TRANSIT'">
+                        <img src="{{y.transitVehicleIcon}}" width="20" class="ms-1">
+                        <span class="border rounded-2 p-1 transit-line-name me-1"
+                          [ngStyle]="{'background-color':y.transitLineColor}">
+                          <b>{{y.transitLineName}}</b>
+                        </span>
+                      </ng-container>
+                      <ng-container *ngIf="!last">
+                        <i class="fa-solid fa-chevron-right text-secondary mx-1" style="font-size: 10px;"></i>
+                      </ng-container>
+                    </ng-container>
+                  </div>
+                </div>
+              </div>
+
+            </button>
+          </h2>
+
+          <!-- Accordion Body Starts -->
+
+          <div id="collapse{{i}}" class="accordion-collapse collapse" data-bs-parent="#faveRouteAccordion">
+            <div class="accordion-body">
+              <ul *ngFor="let y of x.steps;">
+                <li *ngIf="y.travelMode=='WALKING'"> {{y.instructions}} ({{y.distance}}m)</li>
+                <li *ngIf="y.travelMode==='TRANSIT'">
+                  <div>
+                    {{y.instructions}} ( {{y.transitNumStops}} stops )
+                  </div>
+                  <div>
+                    <img src="{{y.transitVehicleIcon}}">
+                    <b>{{y.transitLineName}}</b>
+                  </div>
+                </li>
+              </ul>
+              <div class="d-flex justify-content-center">
+                <!-- Add deletefav method here -->
+                <i class="fa-solid fa-heart-crack" style="cursor:pointer;" (click)="deleteFav(x.favId)"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- End of Accordion -->
+
+  </div>
+
+
+
+
+
+</div>

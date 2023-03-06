@@ -1,0 +1,78 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 offset-md-2 col-sm-12 mt-5">
+      <!-- Access admin functions -->
+      <button class="btn btn-sm btn-dark mb-5" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasAdmin"
+        aria-controls="offcanvasAdmin" data-mdb-ripple-color="dark" style="z-index: 1" id="admin">
+        More admin functions
+      </button>
+      <div class="offcanvas offcanvas-start bg-dark text-light" data-bs-scroll="true" tabindex="-1" id="offcanvasAdmin"
+        aria-labelledby="offcanvasAdminLabel">
+        <div class="offcanvas-header">
+          <h4 class="offcanvas-title" id="offcanvasAdminLabel"><b>Access admin functions</b></h4>
+          <button type="button" class="btn-close text-light" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+          <div class="row">
+            <a class="text-light" style="text-decoration: none; font-size: larger;" routerLink="../admin">
+              <i class="fa-solid fa-list-check text-light"></i>
+              Manage users
+            </a>
+          </div>
+        </div>
+      </div>
+      <!-- End access admin functions -->
+      <table class="table">
+        <thead>
+          <th></th>
+          <th>First name</th>
+          <th>Last name</th>
+          <th>Email</th>
+          <th>User active status</th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let u of users">
+            <td><img [src]="createImgPath(u.profilePicture)" class="rounded-circle" style="width:30px; height:30px;">
+            </td>
+            <td>{{u.firstName}}</td>
+            <td>{{u.lastName}}</td>
+            <td>{{u.email}}</td>
+            <td><button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                (click)="displayStatus(u.userId)" id="edit">
+                Edit
+              </button></td>
+          </tr>
+          <tr>
+          </tr>
+        </tbody>
+      </table>
+      <!-- Edit user modal -->
+      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">User Status</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <mat-slide-toggle [(ngModel)]="isChecked" ngDefaultControl>
+                <span *ngIf="isChecked">User is active</span>
+                <span *ngIf="!isChecked">User is blocked</span>
+
+                <!-- User is active:
+              {{isChecked}} -->
+              </mat-slide-toggle>
+            </div>
+            <div class="modal-footer">
+              <!-- <button type="button" class="btn btn-secondary"
+              data-bs-dismiss="modal">Close</button> -->
+              <button type="button" class="btn btn-warning" data-bs-dismiss="modal" (click)="updateUserStatus()"
+                id="savechanges">Save changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- End edit user modal -->
+    </div>
+  </div>
+</div>

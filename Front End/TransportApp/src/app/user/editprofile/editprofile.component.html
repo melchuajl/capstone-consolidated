@@ -1,0 +1,65 @@
+<div class="container">
+  <section class="h-100">
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col col-lg-10 col-xl-8">
+          <div>
+            <div class="card-body p-4 text-black">
+              <div class="col-lg-12" style="text-align: center;">
+
+                <div class="row">
+                  <div class="col-md-6">
+                    <img src="/assets/images/edit-profile.png" width="100%" alt="edit profile">
+                  </div>
+                  <div class="col">
+                    <!-- Edit profile info fields -->
+                    <form [formGroup]="updateForm" (ngSubmit)="updateProfileSubmit()">
+                      <h4><b>Edit personal details</b></h4>
+                      <div class="input-group mb-3">
+                        <span class="input-group-text" id="firstName">First name</span>
+                        <input type="text" class="form-control" formControlName="firstName"
+                          [(ngModel)]="updateUser.firstName">
+                      </div>
+                      <div class="input-group mb-3">
+                        <span class="input-group-text" id="lastName">Last name</span>
+                        <input type="text" class="form-control" formControlName="lastName"
+                          [(ngModel)]="updateUser.lastName">
+                      </div>
+                      <div class="input-group mb-3">
+                        <span class="input-group-text" id="dateOfBirth">Date of birth</span>
+                        <input type="date" class="form-control" formControlName="dateOfBirth"
+                          [(ngModel)]="updateUser.dateOfBirth">
+                      </div>
+
+                      <!-- Upload/change profile image -->
+                      <br>
+                      <h4><b>Change profile image</b></h4>
+
+                      <app-imageupload (onUploadFinished)="uploadFinished($event)"></app-imageupload>
+                      <div class="row">
+                        <div class="offset-md-3 col-md-6">
+                          <button type="button" class="btn btn-sm btn-outline-secondary mb-3" (click)="onCreate()" id="uploadimage">Upload image</button>
+                        </div>
+                      </div>
+
+                      <!-- Submit button that calls put/patch to User API -->
+                      <button class="btn btn-dark col-sm-8 col-md-6 my-3" data-mdb-ripple-color="dark"
+                        style="z-index: 1" id="savechanges">
+                        Save changes
+                      </button>
+                    </form>
+                  </div>
+
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div *ngIf="isLoading" class="spinner"></div>
+<div *ngIf="isLoading" class="spinner-image"></div>

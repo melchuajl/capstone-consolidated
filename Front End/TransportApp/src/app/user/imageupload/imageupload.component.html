@@ -1,0 +1,13 @@
+<div class="row" class="mb-3">
+    <div class="col-md-4 input-group">
+        <input type="file" class="form-control" #file placeholder="Choose file" (change)="uploadFile(file.files)">
+    </div>
+    <div class="col-md-8 text-center">
+        <span class="upload" *ngIf="progress > 0 && progress < 100">
+            Fetching image {{progress}}%
+        </span>
+        <span class="upload" *ngIf="message">
+            {{message}}
+        </span>
+    </div>
+</div>

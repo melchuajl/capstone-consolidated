@@ -1,0 +1,89 @@
+<div class="container vh-80">
+  <div class="row justify-content-center mt-5">
+    <div class="register-bg-image col-md-8 col-sm-10" style="--bs-bg-opacity: .5;">
+      <div class="card-body px-5">
+        <div class="text-center my-3">
+          <h2 style="z-index: 1;"><b>Register for a new account</b></h2>
+          <p style="color: lightslategray; text-align: center; z-index: 1;">
+            Please enter your registration details
+          </p>
+        </div>
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+          <div class="row mt-3">
+            <div class="col-md-4 offset-md-2">
+              <div class="mb-3">
+                <input type="text" class="form-control" id="firstName" formControlName="firstName"
+                  placeholder="First name">
+              </div>
+              <div class="text-danger error-text" *ngIf="firstname?.dirty && firstname?.invalid">First Name is required
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="mb-3">
+                <input type="text" class="form-control" id="lastName" formControlName="lastName"
+                  placeholder="Last name">
+              </div>
+              <div class="text-danger error-text" *ngIf="lastname?.dirty && lastname?.invalid">Last Name is required
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-8 offset-md-2">
+              <div class="mb-3">
+                <input type="email" class="form-control" id="email" formControlName="email" placeholder="Email">
+              </div>
+              <div class="text-danger error-text" *ngIf="email?.dirty && email?.invalid">Please check your email</div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-8 offset-md-2">
+              <div class="mb-3">
+                <input type="password" class="form-control" id="password" formControlName="password"
+                  placeholder="Password">
+              </div>
+              <div class="text-danger error-text" *ngIf="password?.dirty && password?.invalid">Password must be at least
+                8 characters</div>
+            </div>
+          </div>
+          <!-- Optional to confirm password -->
+          <!-- <div class="row">
+            <div class="col-md-8 offset-md-2">
+              <div class="mb-3">
+                <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm password">
+              </div>
+              <div class="text-danger" *ngIf="confirmPassword?.dirty && confirmPassword?.invalid">Confirm password is required</div>
+            </div>
+          </div> -->
+          <div class="row">
+            <div class="col-md-8 offset-md-2">
+              <div class="mb-3">
+                <label for="dateOfBirth" class="form-label"><b>Date of birth</b></label>
+                <input type="date" class="form-control" id="dateOfBirth" formControlName="dateOfBirth">
+              </div>
+            </div>
+          </div>
+          <!-- <div class="row">
+            <div class="col-md-8 offset-md-2 mt-3">
+              <label for="app-imageupload" class="align-left mb-2"><b>Profile image (optional)</b></label>
+              <app-imageupload (onUploadFinished)="uploadFinished($event)"></app-imageupload>
+              <div class="row">
+                <div class="col-md-4 offset-md-4">
+                  <button type="button" class="btn btn-sm btn-secondary mb-3 w-100" (click)="onCreate()">Upload image</button>
+                </div>
+              </div>
+            </div>
+          </div> -->
+          <div class="row">
+            <div class="col-md-6 offset-md-3 text-center mt-3">
+              <button class="btn btn-dark">Register</button>
+            </div>
+          </div>
+          <!-- <div class="g-signin2" data-onsuccess="onSignIn"></div> -->
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="isLoading" class="spinner"></div>
+<div *ngIf="isLoading" class="spinner-image"></div>

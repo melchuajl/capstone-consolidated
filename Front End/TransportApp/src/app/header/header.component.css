@@ -1,0 +1,10 @@
+.navbar-margin {
+  padding: 0px !important;
+  margin-bottom: 0px !important;
+}
+
+@media only screen and (max-width: 600px) {
+  .navbar-margin {
+    position: absolute;
+  }
+}

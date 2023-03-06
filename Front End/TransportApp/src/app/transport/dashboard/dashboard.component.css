@@ -1,0 +1,44 @@
+.transit-line-name {
+  text-align: center;
+  color: white;
+  font-weight: bold;
+}
+
+.accordian-text {
+  color: black !important;
+}
+
+.accordian-details {
+  font-size: smaller;
+}
+
+#walking-time {
+  color: grey; 
+  vertical-align: sub !important;
+  font-size: 11px;
+  margin-top: 15px;
+}
+
+.accordian-time {
+  font-size: larger;
+  font-weight: 600;
+}
+
+button.accordion-button {
+  background-color: none;
+  border-color: white;
+  border: 0;
+}
+
+button.accordion-button:focus,
+button.accordion-button:hover {
+  background-color: none;
+  border-color: white;
+  border: 0;
+}
+
+button.accordion-button:not(.collapsed) {
+  background-color: white;
+  border-color: white;
+  border: 0;
+}
